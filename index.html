@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NovaWeb Solutions</title>
+<style>
+:root{color-scheme:light;--bg:#f4f7f6;--text:#333;--heading:#1e293b;--surface:#fff;--surface-title:#0f172a;--bar:#1e293b;--bar-text:#cbd5e1;--accent:#38bdf8;--accent-strong:#0284c7;--accent-hover:#0369a1;--border:#cbd5e1;--shadow:rgba(0,0,0,.05);--shadow-hover:rgba(0,0,0,.15);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0b1220;--text:#e2e8f0;--heading:#f1f5f9;--surface:#1e293b;--surface-title:#f8fafc;--bar:#0f172a;--accent-strong:#0ea5e9;--accent-hover:#38bdf8;--border:#475569;--shadow:rgba(0,0,0,.4);--shadow-hover:rgba(0,0,0,.6)}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0b1220;--text:#e2e8f0;--heading:#f1f5f9;--surface:#1e293b;--surface-title:#f8fafc;--bar:#0f172a;--accent-strong:#0ea5e9;--accent-hover:#38bdf8;--border:#475569;--shadow:rgba(0,0,0,.4);--shadow-hover:rgba(0,0,0,.6)}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{display:flex;flex-direction:column;min-height:100vh;background:var(--bg);color:var(--text);line-height:1.6;transition:background-color .3s,color .3s}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bar);z-index:101}
+.navbar{display:flex;justify-content:space-between;align-items:center;background:var(--bar);padding:1rem 5%;color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:100}
+.logo{font-size:1.5rem;font-weight:bold}.logo span{color:var(--accent)}
+.nav-links{list-style:none;display:flex;align-items:center;gap:1.5rem}
+.nav-links a{color:var(--bar-text);text-decoration:none;display:flex;align-items:center;gap:.4rem;padding-bottom:2px;border-bottom:2px solid transparent;transition:color .3s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}.nav-links a.active{border-bottom-color:var(--accent)}
+.icon-btn{background:transparent;border:1px solid var(--bar-text);color:var(--bar-text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;transition:color .3s,border-color .3s,transform .3s}
+.icon-btn:hover{color:var(--accent);border-color:var(--accent);transform:rotate(20deg)}
+.menu-toggle{display:none}
+main{flex:1}.page{display:none}.page.show{display:block}
+.container{max-width:1100px;margin:2.5rem auto;padding:0 1.5rem}
+h1,h2{color:var(--heading);margin-bottom:1rem}.hint{font-size:.9rem;opacity:.7}
+.justified-text{text-align:justify;margin-bottom:1.5rem}
+.hero{background:linear-gradient(135deg,#1e293b,#0f172a);color:#fff;text-align:center;padding:5rem 1.5rem}
+.hero h1{color:#fff;font-size:2.5rem;min-height:3.2em}
+#typed,.cursor{color:var(--accent)}.cursor{animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero p{font-size:1.1rem;margin-bottom:1.5rem;color:#cbd5e1}
+.grid-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:1.5rem}
+.card{background:var(--surface);padding:1.8rem;border-radius:8px;box-shadow:0 4px 6px var(--shadow);transition:transform .3s,box-shadow .3s,background-color .3s}
+.card:hover{transform:translateY(-6px);box-shadow:0 10px 20px var(--shadow-hover)}
+.card-icon{font-size:2rem;margin-bottom:.6rem;display:block}
+.card h3{margin-bottom:.8rem;color:var(--surface-title)}.card .justified-text{margin-bottom:0}
+.flip-card{cursor:pointer}
+.card-extra{max-height:0;overflow:hidden;opacity:0;color:var(--accent-strong);font-weight:600;transition:max-height .4s,opacity .4s,margin-top .4s}
+.flip-card.open .card-extra{max-height:120px;opacity:1;margin-top:1rem}
+.stat{background:var(--surface);border-radius:8px;box-shadow:0 4px 6px var(--shadow);text-align:center;padding:1.5rem}
+.stat-number{display:block;font-size:2.5rem;font-weight:bold;color:var(--accent-strong)}.stat-number::after{content:"+"}
+.faq{margin-top:2.5rem}
+.faq-item{background:var(--surface);border-radius:8px;box-shadow:0 4px 6px var(--shadow);margin-bottom:.8rem;overflow:hidden}
+.faq-question{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:none;color:var(--heading);font-size:1rem;font-weight:600;text-align:left;padding:1rem 1.2rem;cursor:pointer}
+.faq-question i{font-style:normal;transition:transform .3s;color:var(--accent-strong)}
+.faq-item.open .faq-question i{transform:rotate(180deg)}
+.faq-answer{max-height:0;overflow:hidden;padding:0 1.2rem;transition:max-height .4s}
+.faq-item.open .faq-answer{max-height:200px}.faq-answer p{margin-bottom:1rem}
+.btn{display:inline-block;background:var(--accent-strong);color:#fff;padding:.7rem 1.5rem;border:none;border-radius:5px;text-decoration:none;font-size:1rem;cursor:pointer;transition:background-color .3s,transform .2s}
+.btn:hover{background:var(--accent-hover);transform:scale(1.05)}
+.contact-wrapper{background:var(--surface);padding:2rem;border-radius:8px;box-shadow:0 4px 6px var(--shadow);max-width:600px}
+.form-group{margin-bottom:1.2rem}.form-group label{display:block;margin-bottom:.4rem;font-weight:600}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:.7rem;border:1px solid var(--border);border-radius:5px;font-size:1rem;background:var(--bg);color:var(--text)}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:2px solid var(--accent);border-color:transparent}
+.invalid{border-color:#dc2626!important}.valid{border-color:#16a34a!important}
+.error{display:block;color:#dc2626;min-height:1.1em;font-size:.85rem}
+.counter{display:block;text-align:right;font-size:.85rem;opacity:.7}
+.feedback-msg{margin-top:1rem;font-weight:600}
+.back-to-top{position:fixed;right:1.5rem;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));width:46px;height:46px;border:none;border-radius:50%;background:var(--accent-strong);color:#fff;font-size:1.1rem;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(20px);transition:opacity .3s,transform .3s;z-index:90}
+.back-to-top.show{opacity:1;pointer-events:auto;transform:none}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s,box-shadow .3s}
+.reveal.visible{opacity:1;transform:none}
+footer{background:var(--bar);color:var(--bar-text);text-align:center;padding:1rem;margin-top:auto}
+@media (max-width:600px){.navbar{flex-wrap:wrap}.menu-toggle{display:block}.nav-links{display:none;flex-direction:column;align-items:flex-start;width:100%;gap:1rem;padding-top:1rem}.nav-links.open{display:flex}.hero h1{font-size:1.8rem}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header>
+<nav class="navbar">
+  <div class="logo">Nova<span>Web</span></div>
+  <button id="menuToggle" class="icon-btn menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" data-page="home">🏠 Home</a></li>
+    <li><a href="#about" data-page="about">ℹ️ About Us</a></li>
+    <li><a href="#contact" data-page="contact">✉️ Contact</a></li>
+    <li><button id="themeToggle" class="icon-btn" aria-label="Switch light/dark theme">☾</button></li>
+  </ul>
+</nav>
+</header>
+
+<main>
+<section class="page" id="page-home">
+  <div class="hero">
+    <h1>Building Modern &amp; Responsive <span id="typed" data-words="Web Experiences,Landing Pages,Online Stores,Portfolios"></span><span class="cursor">|</span></h1>
+    <p>We craft clean, fast, and accessible websites tailored to your needs.</p>
+    <a href="#about" class="btn">Learn More</a>
+  </div>
+  <div class="container">
+    <div class="stats grid-container">
+      <div class="stat reveal"><span class="stat-number" data-target="120">0</span><span>Projects Delivered</span></div>
+      <div class="stat reveal"><span class="stat-number" data-target="45">0</span><span>Happy Clients</span></div>
+      <div class="stat reveal"><span class="stat-number" data-target="8">0</span><span>Years of Experience</span></div>
+    </div>
+  </div>
+  <div class="container">
+    <h2>Our Core Services</h2>
+    <p class="hint">Click a card to learn more.</p>
+    <div class="grid-container">
+      <div class="card reveal flip-card" tabindex="0"><span class="card-icon">💻</span><h3>Web Development</h3><p class="justified-text">We build structured, modular web applications using semantic HTML, external CSS and JavaScript so that every page stays easy to maintain and extend.</p><p class="card-extra justified-text">Tech: HTML5, CSS3, Flexbox, Grid, vanilla JavaScript.</p></div>
+      <div class="card reveal flip-card" tabindex="0"><span class="card-icon">🎨</span><h3>UI/UX Design</h3><p class="justified-text">Our design philosophy focuses on clarity, consistent navigation and a visual hierarchy that guides visitors naturally to what they are looking for.</p><p class="card-extra justified-text">Includes wireframes, colour palettes, accessibility checks and responsive layouts.</p></div>
+      <div class="card reveal flip-card" tabindex="0"><span class="card-icon">☁️</span><h3>Cloud Deployment</h3><p class="justified-text">From local development to live production, we publish sites on reliable hosting with HTTPS, version control and zero-maintenance updates.</p><p class="card-extra justified-text">Hosting on GitHub Pages, Netlify or Cloudflare Pages with automatic updates.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="page-about">
+  <div class="container">
+    <h1>About NovaWeb</h1>
+    <p class="justified-text">Founded with a passion for clean code and user-centric design, NovaWeb helps individuals and small businesses establish a strong, professional presence on the web. We follow web standards, keep our code modular, and test every page across screen sizes so the experience is consistent on phones, tablets and desktops.</p>
+    <p class="justified-text">This site was designed and built by <strong>Rohan Singh</strong> as the Web Technology I final project. Source code: <a href="https://github.com/iamrohan077-ops" target="_blank" rel="noopener" style="color:var(--accent-strong)">github.com/iamrohan077-ops</a>.</p>
+    <div class="grid-container">
+      <div class="card reveal"><h3>🎯 Our Mission</h3><p class="justified-text">To empower individuals and small businesses with fast, accessible and affordable websites that are simple to maintain and a pleasure to use.</p></div>
+      <div class="card reveal"><h3>👁️ Our Vision</h3><p class="justified-text">To set a benchmark in front-end web development, where structure, style and behaviour are cleanly separated and every site is built to last.</p></div>
+    </div>
+    <div class="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item"><button class="faq-question" aria-expanded="false">How long does a website take to build? <i>⌄</i></button><div class="faq-answer"><p class="justified-text">A simple multi-page site usually takes one to two weeks, depending on content and revisions.</p></div></div>
+      <div class="faq-item"><button class="faq-question" aria-expanded="false">Will my site work on mobile phones? <i>⌄</i></button><div class="faq-answer"><p class="justified-text">Yes. Every layout uses Flexbox and CSS Grid with media queries, so pages adapt to phones, tablets and desktops.</p></div></div>
+      <div class="faq-item"><button class="faq-question" aria-expanded="false">Where is the website hosted? <i>⌄</i></button><div class="faq-answer"><p class="justified-text">We publish static sites on free, reliable platforms such as GitHub Pages, with HTTPS included.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="page-contact">
+  <div class="container">
+    <h1>Contact Us</h1>
+    <p class="justified-text">Have a question or want to work together? Fill out the form below and we will get back to you as soon as possible.</p>
+    <div class="contact-wrapper">
+      <form id="contactForm" novalidate>
+        <div class="form-group"><label for="name">Full Name</label><input type="text" id="name" placeholder="Enter your name" required><small class="error" id="nameError"></small></div>
+        <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" placeholder="Enter your email" required><small class="error" id="emailError"></small></div>
+        <div class="form-group"><label for="subject">Topic</label><select id="subject"><option value="general">General question</option><option value="quote">Request a quote</option><option value="support">Support</option></select></div>
+        <div class="form-group"><label for="message">Message</label><textarea id="message" rows="5" maxlength="300" placeholder="Write your message here" required></textarea><small class="counter"><span id="charCount">0</span>/300 characters</small><small class="error" id="messageError"></small></div>
+        <button type="submit" class="btn">Send Message</button>
+        <p id="formFeedback" class="feedback-msg" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+<footer><p>© 2026 NovaWeb Solutions. All rights reserved.</p><p style="margin-top:.4rem;font-size:.9rem">Designed &amp; built by Rohan Singh · <a href="https://github.com/iamrohan077-ops" target="_blank" rel="noopener" style="color:var(--accent)">GitHub: iamrohan077-ops</a></p></footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const $ = (id) => document.getElementById(id), $$ = (s) => document.querySelectorAll(s);
+
+  /* Theme */
+  const root = document.documentElement, themeBtn = $("themeToggle");
+  const sysDark = () => window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches;
+  const applyTheme = (t) => { root.setAttribute("data-theme", t); themeBtn.textContent = t === "dark" ? "☀" : "☾"; };
+  let saved = null;
+  try { saved = localStorage.getItem("novaweb-theme"); } catch (e) {}
+  applyTheme(saved || (sysDark() ? "dark" : "light"));
+  themeBtn.addEventListener("click", () => {
+    const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    applyTheme(next);
+    try { localStorage.setItem("novaweb-theme", next); } catch (e) {}
+  });
+
+  /* Mobile menu */
+  const menuBtn = $("menuToggle"), navLinks = $("navLinks");
+  menuBtn.addEventListener("click", () => menuBtn.setAttribute("aria-expanded", String(navLinks.classList.toggle("open"))));
+
+  /* Scroll-triggered effects */
+  const onVisible = (items, threshold, fn, fallback) => {
+    if (!("IntersectionObserver" in window)) return items.forEach(fallback);
+    const obs = new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting) { fn(e.target); o.unobserve(e.target); } }), { threshold });
+    items.forEach((i) => obs.observe(i));
+  };
+  const show = (el) => el.classList.add("visible");
+  onVisible($$(".reveal"), 0.15, show, show);
+  const runCounter = (el) => {
+    const target = Number(el.dataset.target), start = performance.now();
+    const tick = (now) => { const p = Math.min((now - start) / 1500, 1); el.textContent = Math.floor(p * target); if (p < 1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  };
+  onVisible($$(".stat-number"), 0.5, runCounter, (c) => { c.textContent = c.dataset.target; });
+
+  /* Typing effect */
+  const typed = $("typed"), words = typed.dataset.words.split(",");
+  let w = 0, c = 0, del = false;
+  const type = () => {
+    const word = words[w]; let delay;
+    typed.textContent = word.substring(0, c);
+    if (!del && c < word.length) { c++; delay = 90; }
+    else if (!del) { del = true; delay = 1400; }
+    else if (c > 0) { c--; delay = 45; }
+    else { del = false; w = (w + 1) % words.length; delay = 300; }
+    setTimeout(type, delay);
+  };
+  type();
+
+  /* Service cards */
+  $$(".flip-card").forEach((card) => {
+    const toggle = () => card.classList.toggle("open");
+    card.addEventListener("click", toggle);
+    card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+  });
+
+  /* FAQ accordion */
+  const faq = $$(".faq-item");
+  faq.forEach((item) => {
+    const btn = item.querySelector(".faq-question");
+    btn.addEventListener("click", () => {
+      const was = item.classList.contains("open");
+      faq.forEach((o) => { o.classList.remove("open"); o.querySelector(".faq-question").setAttribute("aria-expanded", "false"); });
+      if (!was) { item.classList.add("open"); btn.setAttribute("aria-expanded", "true"); }
+    });
+  });
+
+  /* Back to top */
+  const topBtn = $("backToTop");
+  window.addEventListener("scroll", () => topBtn.classList.toggle("show", window.scrollY > 300));
+  topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+  /* Contact form */
+  const form = $("contactForm"), nameIn = $("name"), emailIn = $("email"), msgIn = $("message");
+  const feedback = $("formFeedback"), charCount = $("charCount");
+  const setState = (input, errId, msg) => {
+    $(errId).textContent = msg;
+    input.classList.toggle("invalid", msg !== "");
+    input.classList.toggle("valid", msg === "" && input.value.trim() !== "");
+    return msg === "";
+  };
+  const checkName = () => setState(nameIn, "nameError", nameIn.value.trim().length < 2 ? "Please enter at least 2 characters." : "");
+  const checkEmail = () => setState(emailIn, "emailError", /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailIn.value.trim()) ? "" : "Please enter a valid email address.");
+  const checkMessage = () => setState(msgIn, "messageError", msgIn.value.trim().length < 10 ? "Message must be at least 10 characters." : "");
+  nameIn.addEventListener("input", checkName);
+  emailIn.addEventListener("input", checkEmail);
+  msgIn.addEventListener("input", () => { charCount.textContent = msgIn.value.length; checkMessage(); });
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if ([checkName(), checkEmail(), checkMessage()].every(Boolean)) {
+      feedback.textContent = `Thank you, ${nameIn.value.trim()}! Your message has been sent successfully.`;
+      feedback.style.color = "#16a34a";
+      form.reset(); charCount.textContent = "0";
+      [nameIn, emailIn, msgIn].forEach((i) => i.classList.remove("valid", "invalid"));
+    } else {
+      feedback.textContent = "Please correct the highlighted fields and try again.";
+      feedback.style.color = "#dc2626";
+    }
+  });
+
+  /* Page routing on the URL hash: #home, #about, #contact */
+  const route = () => {
+    const name = ["home", "about", "contact"].includes(location.hash.slice(1)) ? location.hash.slice(1) : "home";
+    $$(".page").forEach((p) => p.classList.toggle("show", p.id === "page-" + name));
+    $$(".nav-links a").forEach((a) => a.classList.toggle("active", a.dataset.page === name));
+    navLinks.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false");
+    window.scrollTo(0, 0);
+  };
+  window.addEventListener("hashchange", route);
+  route();
+});
+</script>
+</body>
+</html>
